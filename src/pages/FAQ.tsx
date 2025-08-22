@@ -1,9 +1,7 @@
+import FaqMain from "@/components/faq/FaqMain";
+
 const FAQ = () => {
-  return (
-    <div>
-      <h2>This is FAQ</h2>
-    </div>
-  );
+  return <FaqMain />;
 };
 
 export default FAQ;
