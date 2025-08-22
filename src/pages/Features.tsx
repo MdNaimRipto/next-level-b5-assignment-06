@@ -1,9 +1,7 @@
+import FeaturesMain from "@/components/features/FeaturesMain";
+
 const Features = () => {
-  return (
-    <div>
-      <h2>This is Features</h2>
-    </div>
-  );
+  return <FeaturesMain />;
 };
 
 export default Features;
