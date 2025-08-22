@@ -1,24 +1,32 @@
-import Logo from "./logo";
-import { Button } from "./ui/button";
+import { Link, useLocation } from "react-router";
+import Logo from "../../components/logo";
+import { Button } from "../../components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "./ui/navigation-menu";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+} from "../../components/ui/navigation-menu";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../../components/ui/popover";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#", label: "Home", active: true },
-  { href: "#", label: "Features" },
-  { href: "#", label: "Pricing" },
-  { href: "#", label: "About" },
+  { path: "/", label: "Home" },
+  { path: "/about", label: "About Us" },
+  { path: "/features", label: "Features" },
+  { path: "/contact", label: "Contact" },
+  { path: "/faq", label: "FAQ" },
 ];
 
 export default function Navbar() {
+  const { pathname } = useLocation();
+
   return (
-    <header className="border-b px-4 md:px-6">
+    <header className="container mx-auto border-b px-4 md:px-6">
       <div className="flex h-16 justify-between gap-4">
         {/* Left side */}
         <div className="flex gap-2">
@@ -60,11 +68,11 @@ export default function Navbar() {
                     {navigationLinks.map((link, index) => (
                       <NavigationMenuItem key={index} className="w-full">
                         <NavigationMenuLink
-                          href={link.href}
                           className="py-1.5"
-                          active={link.active}
+                          asChild
+                          active={pathname === link.path}
                         >
-                          {link.label}
+                          <Link to={link.path}>{link.label}</Link>
                         </NavigationMenuLink>
                       </NavigationMenuItem>
                     ))}
@@ -84,11 +92,11 @@ export default function Navbar() {
                 {navigationLinks.map((link, index) => (
                   <NavigationMenuItem key={index} className="h-full">
                     <NavigationMenuLink
-                      active={link.active}
-                      href={link.href}
                       className="text-muted-foreground hover:text-primary border-b-primary hover:border-b-primary data-[active]:border-b-primary h-full justify-center rounded-none border-y-2 border-transparent py-1.5 font-medium hover:bg-transparent data-[active]:bg-transparent!"
+                      asChild
+                      active={pathname === link.path}
                     >
-                      {link.label}
+                      <Link to={link.path}>{link.label}</Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}
