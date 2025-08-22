@@ -26,7 +26,7 @@ export default function Navbar() {
   const { pathname } = useLocation();
 
   return (
-    <header className="container mx-auto border-b px-4 md:px-6">
+    <header className="sticky top-0 z-50 bg-white container mx-auto border-b px-4 md:px-6">
       <div className="flex h-16 justify-between gap-4">
         {/* Left side */}
         <div className="flex gap-2">
