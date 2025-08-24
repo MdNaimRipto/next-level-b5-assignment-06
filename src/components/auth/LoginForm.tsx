@@ -9,29 +9,49 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import {
-  Link,
-  // useNavigate
-} from "react-router";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
 import PasswordInput from "../ui/passwordInput";
-// import { toast } from "sonner";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useLoginMutation } from "@/redux/features/userApis";
+import { postApiHandler } from "@/utils/apiHandlers/postApiHandler";
+import { useState } from "react";
+
+const loginSchema = z.object({
+  email: z.email(),
+  password: z.string(),
+});
 
 export function LoginForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  //   const navigate = useNavigate();
-  const form = useForm({
-    //! For development only
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const form = useForm<z.infer<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+  const [userLogin] = useLoginMutation();
+  const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+    const option = { data };
+    const optionalTasks = () => {
+      navigate("/");
+      form.reset();
+    };
+
+    await postApiHandler({
+      mutateFn: userLogin,
+      options: option,
+      setIsLoading: setIsLoading,
+      optionalTasksFn: optionalTasks,
+    });
   };
 
   return (
@@ -82,8 +102,12 @@ export function LoginForm({
             />
 
             <div className="w-full flex items-center justify-center">
-              <Button type="submit" className="w-4/5">
-                Login
+              <Button
+                type="submit"
+                disabled={isLoading ? true : false}
+                className="w-4/5"
+              >
+                {isLoading ? "Loading..." : "Login"}
               </Button>
             </div>
           </form>

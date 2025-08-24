@@ -12,6 +12,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useUserContext } from "@/context/AuthContext";
+import Dropdown from "@/shared/navbar/DropdownMenu";
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
@@ -23,6 +25,8 @@ const navigationLinks = [
 ];
 
 export default function Navbar() {
+  const { user } = useUserContext();
+
   const { pathname } = useLocation();
 
   return (
@@ -105,14 +109,18 @@ export default function Navbar() {
           </div>
         </div>
         {/* Right side */}
-        <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="text-sm">
-            <Link to="/auth/login">Sign In</Link>
-          </Button>
-          <Button asChild size="sm" className="text-sm">
-            <Link to="/auth/register">Sign Up</Link>
-          </Button>
-        </div>
+        {user ? (
+          <Dropdown />
+        ) : (
+          <div className="flex items-center gap-2">
+            <Button asChild variant="ghost" size="sm" className="text-sm">
+              <Link to="/auth/login">Sign In</Link>
+            </Button>
+            <Button asChild size="sm" className="text-sm">
+              <Link to="/auth/register">Sign Up</Link>
+            </Button>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -7,6 +7,7 @@ import Contact from "@/pages/Contact";
 import FAQ from "@/pages/FAQ";
 import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
+import Verify from "@/pages/auth/Verify";
 
 export const router = createBrowserRouter([
   {
@@ -42,5 +43,9 @@ export const router = createBrowserRouter([
   {
     Component: Register,
     path: "/auth/register",
+  },
+  {
+    Component: Verify,
+    path: "/auth/verify",
   },
 ]);
