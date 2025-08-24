@@ -21,13 +21,13 @@ export const userApis = baseApi.injectEndpoints({
     // * Register
     //
     verifyAccount: builder.mutation({
-      query: ({ data }) => ({
+      query: ({ token }: { token: string }) => ({
         url: apiConfig.USER.VERIFY,
         method: "PATCH",
         headers: {
           "Content-type": "application/json",
+          Authorization: token,
         },
-        data: JSON.stringify(data),
       }),
       invalidatesTags: ["USER"],
     }),

@@ -1,8 +1,39 @@
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { useVerifyAccountMutation } from "@/redux/features/userApis";
+import { postApiHandler } from "@/utils/apiHandlers/postApiHandler";
+import { useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router";
+import { toast } from "sonner";
 
 export default function Verify() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+
+  const [verifyAccount] = useVerifyAccountMutation();
+  const handleVerify = async () => {
+    if (!token) {
+      return toast.error("No token found. Please try again");
+    }
+
+    const option = {
+      token,
+    };
+    const optionalTasks = () => {
+      navigate("/");
+    };
+
+    await postApiHandler({
+      mutateFn: verifyAccount,
+      options: option,
+      setIsLoading: setIsLoading,
+      optionalTasksFn: optionalTasks,
+    });
+  };
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -20,8 +51,8 @@ export default function Verify() {
               </p>
             </div>
             <div className="w-full flex items-center justify-center mb-3">
-              <Button type="button" className="w-4/5">
-                Verify
+              <Button onClick={handleVerify} type="button" className="w-4/5">
+                {isLoading ? "Verifying" : "Verify"}
               </Button>
             </div>
             <div className="text-center text-sm">
