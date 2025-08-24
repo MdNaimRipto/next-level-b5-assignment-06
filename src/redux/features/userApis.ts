@@ -18,6 +18,20 @@ export const userApis = baseApi.injectEndpoints({
       invalidatesTags: [],
     }),
     //
+    // * Register
+    //
+    verifyAccount: builder.mutation({
+      query: ({ data }) => ({
+        url: apiConfig.USER.VERIFY,
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+        },
+        data: JSON.stringify(data),
+      }),
+      invalidatesTags: ["USER"],
+    }),
+    //
     // * Login
     //
     login: builder.mutation({
@@ -55,8 +69,9 @@ export const userApis = baseApi.injectEndpoints({
 });
 
 export const {
-  useLoginMutation,
   useRegisterMutation,
+  useVerifyAccountMutation,
+  useLoginMutation,
   useUserInfoQuery,
   useLogoutMutation,
 } = userApis;

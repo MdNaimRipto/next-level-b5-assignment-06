@@ -11,24 +11,41 @@ import {
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
-import {
-  Link,
-  // useNavigate
-} from "react-router";
+import { Link, useNavigate } from "react-router";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import PasswordInput from "../ui/passwordInput";
-// import { toast } from "sonner";
+import { useState } from "react";
+import { useRegisterMutation } from "@/redux/features/userApis";
+import { postApiHandler } from "@/utils/apiHandlers/postApiHandler";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+
+const roles = ["rider", "driver"];
 
 const registerSchema = z
   .object({
-    name: z
+    fullName: z
       .string()
       .min(3, {
         error: "Name is too short",
       })
       .max(50),
     email: z.email(),
+    contactNumber: z
+      .string()
+      .min(11, { error: "Contact number must be at least 11 digits" })
+      .regex(/^\+?[0-9]{10,15}$/, { error: "Invalid phone number format" }),
+    role: z.enum([...roles] as [string, ...string[]], {
+      error: "Role Must have to be Rider or Driver",
+    }),
     password: z.string().min(8, { error: "Password is too short" }),
     confirmPassword: z
       .string()
@@ -43,20 +60,44 @@ export function RegisterForm({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
-  // const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "",
+      fullName: "",
       email: "",
       password: "",
       confirmPassword: "",
+      contactNumber: "",
+      role: "",
     },
   });
 
+  const [register] = useRegisterMutation();
   const onSubmit = async (data: z.infer<typeof registerSchema>) => {
-    console.log(data);
+    const option = {
+      data: {
+        userName: data.fullName,
+        email: data.email,
+        contactNumber: data.contactNumber,
+        role: data.role,
+        password: data.password,
+      },
+    };
+    const optionalTasks = () => {
+      navigate("/auth/login");
+      form.reset();
+    };
+
+    await postApiHandler({
+      mutateFn: register,
+      options: option,
+      setIsLoading: setIsLoading,
+      optionalTasksFn: optionalTasks,
+    });
   };
 
   return (
@@ -73,12 +114,16 @@ export function RegisterForm({
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name="name"
+              name="fullName"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input
+                      placeholder="John Doe"
+                      {...field}
+                      autoComplete="off"
+                    />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your public display name.
@@ -109,12 +154,59 @@ export function RegisterForm({
             />
             <FormField
               control={form.control}
+              name="contactNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Contact Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="+8801612345678" type="tel" {...field} />
+                  </FormControl>
+                  <FormDescription className="sr-only">
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <FormControl>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select Role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Roles</SelectLabel>
+                          <SelectItem value="rider">Rider</SelectItem>
+                          <SelectItem value="driver">Driver</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <PasswordInput {...field} />
+                    <PasswordInput
+                      {...field}
+                      placeholder="********"
+                      autoComplete="off"
+                    />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your public display name.
@@ -130,7 +222,7 @@ export function RegisterForm({
                 <FormItem>
                   <FormLabel>Confirm Password</FormLabel>
                   <FormControl>
-                    <PasswordInput {...field} />
+                    <PasswordInput {...field} placeholder="********" />
                   </FormControl>
                   <FormDescription className="sr-only">
                     This is your public display name.
@@ -141,7 +233,7 @@ export function RegisterForm({
             />
             <div className="flex justify-center">
               <Button type="submit" className="w-4/5">
-                Register
+                {isLoading ? "Registering" : "Register"}
               </Button>
             </div>
           </form>
