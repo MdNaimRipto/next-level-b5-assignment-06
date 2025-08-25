@@ -1,6 +1,5 @@
 import {
   BoltIcon,
-  BookOpenIcon,
   ChevronDownIcon,
   Layers2Icon,
   LogOutIcon,
@@ -83,14 +82,12 @@ export default function Dropdown() {
               <span>My Account</span>
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem>
-            <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 1</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <BookOpenIcon size={16} className="opacity-60" aria-hidden="true" />
-            <span>Option 3</span>
-          </DropdownMenuItem>
+          <Link to="/user/settings">
+            <DropdownMenuItem>
+              <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
+              <span>Settings</span>
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem

@@ -4,7 +4,11 @@ export const apiConfig = {
     REGISTER: "/users/register", // ✅
     VERIFY: "/users/verifyAccount", // ✅
     LOGIN: "/users/login", // ✅
-    GET: "/users/me",
-    LOGOUT: "/users/logout",
+    GET: "/users/me", // ✅
+    LOGOUT: "/users/logout", // ✅
+  },
+  RIDES: {
+    GET_ALL: "/rides/activeRides",
+    REQUEST: "/rides/requestRide",
   },
 };

@@ -18,6 +18,7 @@ import Dropdown from "@/shared/navbar/DropdownMenu";
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
   { path: "/", label: "Home" },
+  { path: "/rides", label: "Rides" },
   { path: "/about", label: "About Us" },
   { path: "/features", label: "Features" },
   { path: "/contact", label: "Contact" },

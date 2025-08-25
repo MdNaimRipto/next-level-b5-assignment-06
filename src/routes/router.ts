@@ -8,6 +8,9 @@ import FAQ from "@/pages/FAQ";
 import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
 import Verify from "@/pages/auth/Verify";
+import Rides from "@/pages/Rides";
+import AuthLayout from "@/layouts/AuthLayout";
+import UserLayout from "@/layouts/UserLayout";
 
 export const router = createBrowserRouter([
   {
@@ -34,18 +37,33 @@ export const router = createBrowserRouter([
         Component: FAQ,
         path: "faq",
       },
+      {
+        Component: Rides,
+        path: "rides",
+      },
     ],
   },
   {
-    Component: Login,
-    path: "/auth/login",
+    Component: AuthLayout,
+    path: "/auth",
+    children: [
+      {
+        Component: Login,
+        path: "login",
+      },
+      {
+        Component: Register,
+        path: "register",
+      },
+      {
+        Component: Verify,
+        path: "verify",
+      },
+    ],
   },
   {
-    Component: Register,
-    path: "/auth/register",
-  },
-  {
-    Component: Verify,
-    path: "/auth/verify",
+    Component: UserLayout,
+    path: "/user",
+    children: [],
   },
 ]);
