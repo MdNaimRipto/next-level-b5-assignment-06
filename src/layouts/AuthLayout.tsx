@@ -1,6 +1,12 @@
-import { Outlet } from "react-router";
+import { Navigate, Outlet, useLocation } from "react-router";
 
 const AuthLayout = () => {
+  const { pathname } = useLocation();
+
+  if (pathname === "/auth") {
+    return <Navigate to="/auth/login" replace />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* <Navbar /> */}

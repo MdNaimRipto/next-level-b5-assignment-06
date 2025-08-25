@@ -11,6 +11,9 @@ import Verify from "@/pages/auth/Verify";
 import Rides from "@/pages/Rides";
 import AuthLayout from "@/layouts/AuthLayout";
 import UserLayout from "@/layouts/UserLayout";
+import Account from "@/pages/user/Account";
+import MyRides from "@/pages/user/MyRides";
+import Settings from "@/pages/user/Settings";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +67,19 @@ export const router = createBrowserRouter([
   {
     Component: UserLayout,
     path: "/user",
-    children: [],
+    children: [
+      {
+        Component: Account,
+        path: "account",
+      },
+      {
+        Component: MyRides,
+        path: "myRides",
+      },
+      {
+        Component: Settings,
+        path: "settings",
+      },
+    ],
   },
 ]);
