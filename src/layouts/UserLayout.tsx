@@ -1,5 +1,7 @@
-import Footer from "@/shared/footer/Footer";
-import Navbar from "@/shared/navbar/Navbar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+// import Footer from "@/shared/footer/Footer";
+// import Navbar from "@/shared/navbar/Navbar";
 import { Navigate, Outlet, useLocation } from "react-router";
 
 export default function UserLayout() {
@@ -9,15 +11,18 @@ export default function UserLayout() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
+    <div className="flex flex-col min-h-screen my-12">
+      {/* <Navbar /> */}
 
-      {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-6">
-        <Outlet />
-      </main>
+      <SidebarProvider>
+        <AppSidebar />
+        <main className="w-full">
+          <SidebarTrigger />
+          <Outlet />
+        </main>
+      </SidebarProvider>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
