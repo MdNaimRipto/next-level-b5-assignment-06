@@ -65,6 +65,20 @@ export const userApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USER"],
     }),
+    //
+    // * update User
+    //
+    updateUser: builder.mutation({
+      query: ({ data }) => ({
+        url: apiConfig.USER.UPDATE_USER,
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        data: JSON.stringify(data),
+      }),
+      invalidatesTags: ["USER"],
+    }),
   }),
 });
 
@@ -74,4 +88,5 @@ export const {
   useLoginMutation,
   useUserInfoQuery,
   useLogoutMutation,
+  useUpdateUserMutation,
 } = userApis;

@@ -37,6 +37,7 @@ const rideSchema = z.object({
   from: z.string().min(2, "From location required"),
   to: z.string().min(2, "To location required"),
   price: z.string().regex(/^\d+$/, "Price must be a number"),
+  payment: z.string().optional(),
 });
 
 type RideForm = z.infer<typeof rideSchema>;
@@ -61,6 +62,7 @@ export default function RidesPage() {
       from: "",
       to: "",
       price: "",
+      payment: "Pay After Ride Completion",
     },
   });
 
@@ -191,6 +193,25 @@ export default function RidesPage() {
                         type="number"
                         placeholder="Enter price"
                         {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="payment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Payment Method</FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled
+                        type="number"
+                        placeholder="Pay After Ride completion"
+                        {...field}
+                        className="placeholder:text-gray-900"
                       />
                     </FormControl>
                     <FormMessage />

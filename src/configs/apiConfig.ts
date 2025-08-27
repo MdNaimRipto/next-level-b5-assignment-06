@@ -6,6 +6,9 @@ export const apiConfig = {
     LOGIN: "/users/login", // ✅
     GET: "/users/me", // ✅
     LOGOUT: "/users/logout", // ✅
+    UPDATE_USER: "/users/updateUser",
+    UPDATE_PASSWORD: "/users/updatePassword",
+    UPDATE_STATUS: "/users/updateActiveStatus",
   },
   RIDES: {
     GET_ALL: "/rides/activeRides",

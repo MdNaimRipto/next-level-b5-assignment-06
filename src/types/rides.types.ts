@@ -26,3 +26,15 @@ export interface IUpdateRideStatus {
   acceptStatus: acceptStatusEnums;
   rideStatus: rideStatusEnums;
 }
+
+export interface IRideFilters {
+  searchTerm?: string;
+  from?: string;
+  to?: string;
+  fair?: string;
+  updatedAt?: string;
+  acceptStatus?: acceptStatusEnums;
+  rideStatus?: rideStatusEnums;
+  page?: string;
+  limit?: string;
+}
