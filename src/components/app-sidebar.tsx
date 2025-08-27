@@ -1,4 +1,4 @@
-import { Home, User } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 import {
   Sidebar,
@@ -12,31 +12,20 @@ import {
 } from "@/components/ui/sidebar";
 import { Link, useLocation } from "react-router";
 
-// Menu items.
-const items = [
-  {
-    title: "My Account",
-    url: "/user/account",
-    icon: User,
-  },
-  {
-    title: "My Rides",
-    url: "/user/myRides",
-    icon: User,
-  },
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-];
-
-export function AppSidebar() {
+export function AppSidebar({
+  items,
+}: {
+  items: Array<{
+    title: string;
+    url: string;
+    icon: LucideIcon;
+  }>;
+}) {
   const { pathname } = useLocation();
 
   return (
     <Sidebar>
-      <SidebarContent className="bg-white py-12">
+      <SidebarContent className="bg-white pt-20">
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>

@@ -13,7 +13,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import UserLayout from "@/layouts/UserLayout";
 import Account from "@/pages/user/Account";
 import MyRides from "@/pages/user/MyRides";
-import Settings from "@/pages/user/Settings";
+import AdminLayout from "@/layouts/AdminLayout";
 
 export const router = createBrowserRouter([
   {
@@ -76,9 +76,19 @@ export const router = createBrowserRouter([
         Component: MyRides,
         path: "myRides",
       },
+    ],
+  },
+  {
+    Component: AdminLayout,
+    path: "/admin",
+    children: [
       {
-        Component: Settings,
-        path: "settings",
+        Component: Account,
+        path: "users",
+      },
+      {
+        Component: MyRides,
+        path: "rides",
       },
     ],
   },

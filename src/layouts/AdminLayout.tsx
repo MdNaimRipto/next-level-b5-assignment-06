@@ -6,7 +6,7 @@ import Navbar from "@/shared/navbar/Navbar";
 import { CarFront, User } from "lucide-react";
 import { Navigate, Outlet, useLocation } from "react-router";
 
-export default function UserLayout() {
+export default function AdminLayout() {
   const { pathname } = useLocation();
   const { user } = useUserContext();
 
@@ -14,20 +14,24 @@ export default function UserLayout() {
     return <Navigate to="/auth/login" replace />;
   }
 
-  if (pathname === "/user") {
-    return <Navigate to="/user/account" replace />;
+  if (user && user.role !== "admin") {
+    return <Navigate to="/" replace />;
+  }
+
+  if (pathname === "/admin") {
+    return <Navigate to="/admin/users" replace />;
   }
 
   // Menu items.
   const items = [
     {
-      title: "My Account",
-      url: "/user/account",
+      title: "Users",
+      url: "/admin/users",
       icon: User,
     },
     {
-      title: "My Rides",
-      url: "/user/myRides",
+      title: "Rides",
+      url: "/admin/rides",
       icon: CarFront,
     },
   ];

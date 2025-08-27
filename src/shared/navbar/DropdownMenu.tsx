@@ -1,7 +1,7 @@
 import {
-  BoltIcon,
   ChevronDownIcon,
   Layers2Icon,
+  LayoutDashboard,
   LogOutIcon,
 } from "lucide-react";
 
@@ -82,12 +82,18 @@ export default function Dropdown() {
               <span>My Account</span>
             </DropdownMenuItem>
           </Link>
-          <Link to="/user/settings">
-            <DropdownMenuItem>
-              <BoltIcon size={16} className="opacity-60" aria-hidden="true" />
-              <span>Settings</span>
-            </DropdownMenuItem>
-          </Link>
+          {user && user.role === "admin" && (
+            <Link to="/admin/users">
+              <DropdownMenuItem>
+                <LayoutDashboard
+                  size={16}
+                  className="opacity-60"
+                  aria-hidden="true"
+                />
+                <span>Admin Dashboard</span>
+              </DropdownMenuItem>
+            </Link>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
