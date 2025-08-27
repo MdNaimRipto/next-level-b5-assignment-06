@@ -1,7 +1,7 @@
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useUserContext } from "@/context/AuthContext";
-// import Footer from "@/shared/footer/Footer";
+import Footer from "@/shared/footer/Footer";
 import Navbar from "@/shared/navbar/Navbar";
 import { CarFront, User } from "lucide-react";
 import { Navigate, Outlet, useLocation } from "react-router";
@@ -39,14 +39,15 @@ export default function UserLayout() {
         <main className="w-full">
           <Navbar />
           <br />
-          <div className="container px-4 mx-auto">
-            <SidebarTrigger />
+          <div className="min-h-screen">
+            <div className="container px-4 mx-auto">
+              <SidebarTrigger />
+            </div>
+            <Outlet />
           </div>
-          <Outlet />
+          <Footer />
         </main>
       </SidebarProvider>
-
-      {/* <Footer /> */}
     </div>
   );
 }

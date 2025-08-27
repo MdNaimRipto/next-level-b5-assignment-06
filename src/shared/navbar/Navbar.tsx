@@ -101,7 +101,9 @@ export default function Navbar() {
                       asChild
                       active={pathname === link.path}
                     >
-                      <Link to={link.path}>{link.label}</Link>
+                      <Link to={link.path} className="whitespace-nowrap">
+                        {link.label}
+                      </Link>
                     </NavigationMenuLink>
                   </NavigationMenuItem>
                 ))}

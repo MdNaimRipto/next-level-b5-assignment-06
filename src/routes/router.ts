@@ -14,6 +14,8 @@ import UserLayout from "@/layouts/UserLayout";
 import Account from "@/pages/user/Account";
 import MyRides from "@/pages/user/MyRides";
 import AdminLayout from "@/layouts/AdminLayout";
+import Users from "@/pages/admin/Users";
+import AllRides from "@/pages/admin/AllRides";
 
 export const router = createBrowserRouter([
   {
@@ -83,11 +85,11 @@ export const router = createBrowserRouter([
     path: "/admin",
     children: [
       {
-        Component: Account,
+        Component: Users,
         path: "users",
       },
       {
-        Component: MyRides,
+        Component: AllRides,
         path: "rides",
       },
     ],

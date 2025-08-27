@@ -25,7 +25,7 @@ export const ridesApis = baseApi.injectEndpoints({
         },
         data: JSON.stringify(data),
       }),
-      invalidatesTags: [],
+      invalidatesTags: ["RIDES"],
     }),
     //
     // * Get my rides

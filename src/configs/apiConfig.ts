@@ -14,4 +14,14 @@ export const apiConfig = {
     UPDATE_ACCEPT_STATUS: "/rides/updateRideAcceptStatus",
     UPDATE_STATUS: "/rides/updateRideStatus",
   },
+  ADMIN: {
+    GET_USERS: "/admin/getAllUsers",
+    GET_RIDES: "/admin/getAllRides",
+    UPDATE_BLOCK_STATUS: "/admin/updateBlockStatus",
+  },
+  SOS: {
+    REQUEST: "/sos/requestSos",
+    GET: "/sos/getRideSos",
+    UPDATE: "/sos/updateStatus",
+  },
 };
