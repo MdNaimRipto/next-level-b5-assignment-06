@@ -10,5 +10,8 @@ export const apiConfig = {
   RIDES: {
     GET_ALL: "/rides/activeRides",
     REQUEST: "/rides/requestRide",
+    MY_RIDES: "/rides/viewMyRides",
+    UPDATE_ACCEPT_STATUS: "/rides/updateRideAcceptStatus",
+    UPDATE_STATUS: "/rides/updateRideStatus",
   },
 };

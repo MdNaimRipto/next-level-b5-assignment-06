@@ -11,7 +11,7 @@ export const ridesApis = baseApi.injectEndpoints({
         url: apiConfig.RIDES.GET_ALL,
         method: "GET",
       }),
-      providesTags: [],
+      providesTags: ["RIDES"],
     }),
     //
     // * Request Ride
@@ -27,7 +27,51 @@ export const ridesApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: [],
     }),
+    //
+    // * Get my rides
+    //
+    getMyRides: builder.query({
+      query: () => ({
+        url: apiConfig.RIDES.MY_RIDES,
+        method: "GET",
+      }),
+      providesTags: ["RIDES"],
+    }),
+    //
+    // * Update Ride Accept Status
+    //
+    updateRideAcceptStatus: builder.mutation({
+      query: ({ data, id }) => ({
+        url: apiConfig.RIDES.UPDATE_ACCEPT_STATUS + `/${id}`,
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+        },
+        data: JSON.stringify(data),
+      }),
+      invalidatesTags: ["RIDES"],
+    }),
+    //
+    // * Update Ride Accept Status
+    //
+    updateRideStatus: builder.mutation({
+      query: ({ data, id }) => ({
+        url: apiConfig.RIDES.UPDATE_STATUS + `/${id}`,
+        method: "PATCH",
+        headers: {
+          "Content-type": "application/json",
+        },
+        data: JSON.stringify(data),
+      }),
+      invalidatesTags: ["RIDES"],
+    }),
   }),
 });
 
-export const { useGetActiveRidesQuery, useRequestRideMutation } = ridesApis;
+export const {
+  useGetActiveRidesQuery,
+  useRequestRideMutation,
+  useGetMyRidesQuery,
+  useUpdateRideAcceptStatusMutation,
+  useUpdateRideStatusMutation,
+} = ridesApis;
