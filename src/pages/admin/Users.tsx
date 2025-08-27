@@ -11,13 +11,14 @@ import { IUser } from "@/types/userTypes";
 import { useGetAllUsersQuery } from "@/redux/features/adminApis";
 import { Badge } from "@/components/ui/badge";
 import AccountActionSelect from "@/components/admin/AccountActionSelect";
+import Loader from "@/components/Loader";
 
 const Users = () => {
   //   const { user } = useUserContext();
   const { data, isLoading } = useGetAllUsersQuery({});
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   const users = data?.data as IUser[];

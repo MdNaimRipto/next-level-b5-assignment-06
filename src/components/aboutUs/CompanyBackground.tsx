@@ -1,3 +1,5 @@
+import bg from "@/assets/goal.jpg";
+
 export default function CompanyBackground() {
   return (
     <section className="relative dark:bg-gray-900 py-20 lg:py-32">
@@ -46,11 +48,11 @@ export default function CompanyBackground() {
         </div>
 
         {/* Right Image */}
-        <div className="flex justify-center lg:justify-end mt-10 lg:mt-0">
+        <div className="flex justify-center lg:justify-end mt-10 lg:mt-0 h-full w-full">
           <img
-            src="https://images.unsplash.com/photo-1590080876889-2e803b91b0e6?auto=format&fit=crop&w=800&q=80"
+            src={bg}
             alt="Company background illustration"
-            className="rounded-2xl shadow-lg w-full max-w-md"
+            className="rounded-2xl shadow-lg w-full"
           />
         </div>
       </div>

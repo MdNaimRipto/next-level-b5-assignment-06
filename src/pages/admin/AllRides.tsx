@@ -12,6 +12,7 @@ import { IRides, rideStatusEnums } from "@/types/rides.types";
 import { IUser } from "@/types/userTypes";
 import { useGetAllURidesQuery } from "@/redux/features/adminApis";
 import Sos from "@/components/admin/Sos";
+import Loader from "@/components/Loader";
 
 // ✅ Map for badge variants
 const getRideBadgeVariant = (status: rideStatusEnums) => {
@@ -33,7 +34,7 @@ const AllRides = () => {
   const { data, isLoading } = useGetAllURidesQuery({});
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   const rides = data?.data as IRides[];

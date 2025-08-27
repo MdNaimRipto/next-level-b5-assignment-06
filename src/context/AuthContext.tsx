@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
+import Loader from "@/components/Loader";
 import { useUserInfoQuery } from "@/redux/features/userApis";
 import { IUser } from "@/types/userTypes";
 import { createContext, ReactNode, useContext } from "react";
@@ -19,7 +20,7 @@ const AuthContext = ({ children }: { children: ReactNode }) => {
 
   if (isLoading) {
     // return <Loader />;
-    return <h2>Loading...</h2>;
+    return <Loader />;
   }
 
   const user = data?.data as IUser;

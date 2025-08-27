@@ -3,26 +3,19 @@ import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { useRef } from "react";
+import banner01 from "@/assets/banner/banner01.jpg";
+import banner02 from "@/assets/banner/banner02.jpg";
+import banner03 from "@/assets/banner/banner03.jpg";
 
 export default function HeroCarousel() {
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: false }));
 
   const slides = [
     {
-      title: "Seamless Rides for Passengers",
-      description:
-        "Enjoy quick and reliable rides anytime, anywhere. Get instant fare estimates, choose your preferred payment method, and track your driver in real time. Designed to keep your journeys safe, smooth, and stress-free.",
-      image:
-        "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=1600&q=80",
-      cta: "Book a Ride",
-      link: "/features",
-    },
-    {
       title: "Flexibility & Earnings for Drivers",
       description:
         "Take control of your schedule and earnings. Easily toggle availability, accept ride requests on the go, and access detailed ride history with earnings insights. Built to empower drivers with flexibility and transparency.",
-      image:
-        "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1600&q=80",
+      image: banner01,
       cta: "Start Driving",
       link: "/features",
     },
@@ -30,9 +23,16 @@ export default function HeroCarousel() {
       title: "Safety & Trust at Every Step",
       description:
         "Both riders and drivers can travel with confidence. SOS emergency support, verified profiles, and live ride tracking ensure a secure experience for everyone on the road.",
-      image:
-        "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=80",
+      image: banner02,
       cta: "Learn More",
+      link: "/features",
+    },
+    {
+      title: "Seamless Rides for Passengers",
+      description:
+        "Enjoy quick and reliable rides anytime, anywhere. Get instant fare estimates, choose your preferred payment method, and track your driver in real time. Designed to keep your journeys safe, smooth, and stress-free.",
+      image: banner03,
+      cta: "Book a Ride",
       link: "/features",
     },
   ];

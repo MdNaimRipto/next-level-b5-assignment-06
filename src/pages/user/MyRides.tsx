@@ -15,6 +15,7 @@ import { IUser } from "@/types/userTypes";
 import UpdateAcceptStatusSelect from "@/components/myRides/UpdateAcceptStatusSelect";
 import UpdateStatusSelect from "@/components/myRides/UpdateStatusSelect ";
 import RequestSos from "@/components/myRides/RequestSos";
+import Loader from "@/components/Loader";
 
 // ✅ Map for badge variants
 const getRideBadgeVariant = (status: rideStatusEnums) => {
@@ -37,7 +38,7 @@ const MyRides = () => {
   const { data, isLoading } = useGetMyRidesQuery({});
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   const rides = data?.data as IRides[];

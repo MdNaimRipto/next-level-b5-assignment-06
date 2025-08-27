@@ -31,6 +31,7 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { DialogDescription } from "@radix-ui/react-dialog";
 import { postApiHandler } from "@/utils/apiHandlers/postApiHandler";
+import Loader from "@/components/Loader";
 
 const rideSchema = z.object({
   from: z.string().min(2, "From location required"),
@@ -105,13 +106,13 @@ export default function RidesPage() {
   };
 
   if (getIsLoading) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   const drivers = data.data as IUser[];
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-6 min-h-screen">
       <h1 className="text-2xl font-bold mb-6">Available Drivers</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 xl:px-16">
         {drivers.map((driver) => (
