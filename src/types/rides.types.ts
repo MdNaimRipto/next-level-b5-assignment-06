@@ -38,3 +38,13 @@ export interface IRideFilters {
   page?: string;
   limit?: string;
 }
+
+export type EarningFilter = "daily" | "weekly" | "monthly";
+
+export interface EarningDashboard {
+  totalEarning: number;
+  totalCompletedRides: number;
+  currentActiveRides: number;
+  totalCanceledRides: number;
+  filteredEarning: number;
+}

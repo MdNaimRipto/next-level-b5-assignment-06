@@ -16,6 +16,8 @@ import MyRides from "@/pages/user/MyRides";
 import AdminLayout from "@/layouts/AdminLayout";
 import Users from "@/pages/admin/Users";
 import AllRides from "@/pages/admin/AllRides";
+import EarningsDashboard from "@/pages/user/EarningsDashboard";
+import Analytics from "@/pages/admin/Analytics";
 
 export const router = createBrowserRouter([
   {
@@ -78,6 +80,10 @@ export const router = createBrowserRouter([
         Component: MyRides,
         path: "myRides",
       },
+      {
+        Component: EarningsDashboard,
+        path: "earningHistory",
+      },
     ],
   },
   {
@@ -91,6 +97,10 @@ export const router = createBrowserRouter([
       {
         Component: AllRides,
         path: "rides",
+      },
+      {
+        Component: Analytics,
+        path: "analytics",
       },
     ],
   },

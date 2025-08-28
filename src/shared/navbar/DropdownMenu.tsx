@@ -18,7 +18,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useUserContext } from "@/context/AuthContext";
 import { Link, useNavigate } from "react-router";
-import { useLogoutMutation, userApis } from "@/redux/features/userApis";
+import {
+  useLogoutMutation,
+  useUpdateActiveStatusMutation,
+  userApis,
+} from "@/redux/features/userApis";
 import { useState } from "react";
 import { postApiHandler } from "@/utils/apiHandlers/postApiHandler";
 import { useAppDispatch } from "@/redux/hook";
@@ -26,11 +30,14 @@ import { useAppDispatch } from "@/redux/hook";
 export default function Dropdown() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isToggling, setIsToggling] = useState(false);
 
   const { user } = useUserContext();
 
   const [logout] = useLogoutMutation();
+  const [updateActiveStatus] = useUpdateActiveStatusMutation();
   const dispatch = useAppDispatch();
+
   const handleLogout = async () => {
     const option = {};
     const optionalTasks = () => {
@@ -45,13 +52,31 @@ export default function Dropdown() {
       optionalTasksFn: optionalTasks,
     });
   };
+
+  const handleToggleActive = async () => {
+    const option = {
+      data: { isActive: user?.isActive === "active" ? "inactive" : "active" },
+    };
+
+    const optionalTasks = () => {
+      // You might want to refetch user or update context here
+    };
+
+    await postApiHandler({
+      mutateFn: updateActiveStatus,
+      options: option,
+      setIsLoading: setIsToggling,
+      optionalTasksFn: optionalTasks,
+    });
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar className="bg-black">
             <AvatarFallback className="bg-black text-white">
-              {user?.userName.slice(0, 2)}
+              {user?.userName?.slice(0, 2)}
             </AvatarFallback>
           </Avatar>
           <ChevronDownIcon
@@ -68,6 +93,15 @@ export default function Dropdown() {
           </span>
           <span className="text-muted-foreground truncate text-xs font-normal">
             {user?.email}
+          </span>
+          {/* Active Status */}
+          <span className="flex items-center gap-1 text-xs mt-1">
+            <span
+              className={`w-2 h-2 rounded-full ${
+                user?.isActive === "active" ? "bg-green-500" : "bg-gray-400"
+              }`}
+            ></span>
+            {user?.isActive === "active" ? "Active" : "Inactive"}
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -94,6 +128,24 @@ export default function Dropdown() {
               </DropdownMenuItem>
             </Link>
           )}
+          {/* Toggle Active Status */}
+          <DropdownMenuItem
+            onClick={handleToggleActive}
+            className="hover:cursor-pointer"
+          >
+            <span
+              className={`w-2 h-2 inline-block rounded-full ${
+                user?.isActive === "active" ? "bg-green-500" : "bg-gray-400"
+              }`}
+            ></span>
+            <span>
+              {isToggling
+                ? "Updating..."
+                : user?.isActive === "active"
+                ? "Set Inactive"
+                : "Set Active"}
+            </span>
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem

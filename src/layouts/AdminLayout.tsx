@@ -3,7 +3,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { useUserContext } from "@/context/AuthContext";
 import Footer from "@/shared/footer/Footer";
 import Navbar from "@/shared/navbar/Navbar";
-import { CarFront, User } from "lucide-react";
+import { CarFront, DollarSignIcon, User } from "lucide-react";
 import { Navigate, Outlet, useLocation } from "react-router";
 
 export default function AdminLayout() {
@@ -33,6 +33,11 @@ export default function AdminLayout() {
       title: "Rides",
       url: "/admin/rides",
       icon: CarFront,
+    },
+    {
+      title: "Analytics",
+      url: "/admin/analytics",
+      icon: DollarSignIcon,
     },
   ];
 

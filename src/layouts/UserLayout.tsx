@@ -5,6 +5,7 @@ import Footer from "@/shared/footer/Footer";
 import Navbar from "@/shared/navbar/Navbar";
 import { CarFront, User } from "lucide-react";
 import { Navigate, Outlet, useLocation } from "react-router";
+import { toast } from "sonner";
 
 export default function UserLayout() {
   const { pathname } = useLocation();
@@ -16,6 +17,11 @@ export default function UserLayout() {
 
   if (pathname === "/user") {
     return <Navigate to="/user/account" replace />;
+  }
+
+  if (pathname === "/user/earningHistory" && user.role !== "driver") {
+    toast.error("Permission Denied! Cannot access this route");
+    return <Navigate to="/" replace />;
   }
 
   // Menu items.
@@ -31,6 +37,14 @@ export default function UserLayout() {
       icon: CarFront,
     },
   ];
+
+  if (user.role === "driver") {
+    items.push({
+      title: "Earning History",
+      url: "/user/earningHistory",
+      icon: CarFront,
+    });
+  }
 
   return (
     <div className="flex flex-col min-h-screen">

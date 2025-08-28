@@ -1,6 +1,6 @@
 import { apiConfig } from "@/configs/apiConfig";
 import { baseApi } from "../baseApi";
-import { IRideFilters } from "@/types/rides.types";
+import { EarningFilter, IRideFilters } from "@/types/rides.types";
 
 export const ridesApis = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -34,30 +34,50 @@ export const ridesApis = baseApi.injectEndpoints({
     getMyRides: builder.query({
       query: (data: IRideFilters) => {
         const queryParameters = new URLSearchParams();
-        if (data.searchTerm) {
-          queryParameters.append("searchTerm", data.searchTerm);
-        }
-        if (data.page) {
-          queryParameters.append("page", data.page);
-        }
-        if (data.limit) {
-          queryParameters.append("limit", data.limit);
-        }
-        if (data.fair) {
-          queryParameters.append("fair", data.fair);
-        }
-        if (data.rideStatus) {
-          queryParameters.append("rideStatus", data.rideStatus);
-        }
-        if (data.updatedAt) {
-          queryParameters.append("updatedAt", data.updatedAt);
-        }
+
+        Object.entries(data).forEach(([key, value]) => {
+          if (value !== undefined && value !== null && value !== "") {
+            queryParameters.append(key, String(value));
+          }
+        });
+
+        // if (data.searchTerm) {
+        //   queryParameters.append("searchTerm", data.searchTerm);
+        // }
+        // if (data.page) {
+        //   queryParameters.append("page", data.page);
+        // }
+        // if (data.limit) {
+        //   queryParameters.append("limit", data.limit);
+        // }
+        // if (data.fair) {
+        //   queryParameters.append("fair", data.fair);
+        // }
+        // if (data.rideStatus) {
+        //   queryParameters.append("rideStatus", data.rideStatus);
+        // }
+        // if (data.updatedAt) {
+        //   queryParameters.append("updatedAt", data.updatedAt);
+        // }
         return {
           url: `${apiConfig.RIDES.MY_RIDES}?${queryParameters.toString()}`,
           method: "GET",
         };
       },
       providesTags: ["RIDES"],
+    }),
+    //
+    // * Get my rides
+    //
+    getEarningHistory: builder.query({
+      query: (filter: EarningFilter) => {
+        console.log({ filter });
+        return {
+          url: `${apiConfig.RIDES.GET_EARNING_HISTORY}?filter=${filter}`,
+          method: "GET",
+        };
+      },
+      providesTags: [],
     }),
     //
     // * Update Ride Accept Status
@@ -96,4 +116,5 @@ export const {
   useGetMyRidesQuery,
   useUpdateRideAcceptStatusMutation,
   useUpdateRideStatusMutation,
+  useGetEarningHistoryQuery,
 } = ridesApis;

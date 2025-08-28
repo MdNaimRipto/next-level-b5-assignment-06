@@ -55,6 +55,7 @@ const MyRides = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [rideStatus, setRideStatus] = useState("");
+  const [date, setDate] = useState("");
 
   // 🔹 Details Modal State
   const [open, setOpen] = useState(false);
@@ -78,6 +79,32 @@ const MyRides = () => {
     total: number;
   };
 
+  const filteredRides = rides.filter((ride) => {
+    let matches = true;
+
+    // Ride Status filter
+    if (rideStatus && rideStatus !== "all") {
+      matches = matches && ride.rideStatus === rideStatus;
+    }
+
+    // Search filter (From / To)
+    if (searchTerm) {
+      const from = ride.location.from.toLowerCase();
+      const to = ride.location.to.toLowerCase();
+      const term = searchTerm.toLowerCase();
+      matches = matches && (from.includes(term) || to.includes(term));
+    }
+
+    // Date filter
+    if (date) {
+      // Convert ride.createdAt to YYYY-MM-DD string
+      const rideDate = new Date(ride.createdAt).toISOString().split("T")[0];
+      matches = matches && rideDate === date;
+    }
+
+    return matches;
+  });
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
@@ -86,7 +113,7 @@ const MyRides = () => {
       </div>
 
       {/* 🔹 Filters Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         {/* Search */}
         <Input
           placeholder="Search by From/To"
@@ -116,6 +143,16 @@ const MyRides = () => {
             <SelectItem value="cancelled">Cancelled</SelectItem>
           </SelectContent>
         </Select>
+        {/* Date Filter */}
+        <input
+          type="date"
+          className="border rounded-sm p-1"
+          value={date}
+          onChange={(e) => {
+            setPage(1); // reset pagination
+            setDate(e.target.value); // just store the date string
+          }}
+        />
 
         {/* Reset Filters */}
         <Button
@@ -124,6 +161,7 @@ const MyRides = () => {
             setSearchTerm("");
             setRideStatus("");
             setPage(1);
+            setDate("");
           }}
         >
           Reset Filters
@@ -150,8 +188,8 @@ const MyRides = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {rides.length > 0 ? (
-            rides.map((ride, key) => (
+          {filteredRides.length > 0 ? (
+            filteredRides.map((ride, key) => (
               <TableRow key={ride._id}>
                 <TableCell>{(meta.page - 1) * meta.limit + key + 1}</TableCell>
                 <TableCell>

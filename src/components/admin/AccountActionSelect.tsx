@@ -2,13 +2,19 @@ import { useState } from "react";
 import { postApiHandler } from "@/utils/apiHandlers/postApiHandler";
 import { IUser } from "@/types/userTypes";
 import { Button } from "../ui/button";
-import { useUpdateBlockStatusMutation } from "@/redux/features/adminApis";
+import {
+  useUpdateApproveStatusMutation,
+  useUpdateBlockStatusMutation,
+} from "@/redux/features/adminApis";
 
 const AccountActionSelect = ({ user }: { user: IUser }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [updateUser] = useUpdateBlockStatusMutation();
+  const [isBlockLoading, setIsBlockLoading] = useState(false);
+  const [isApproveLoading, setIsApproveLoading] = useState(false);
 
-  const handleUpdateBlockStatusUpdate = async () => {
+  const [updateUserBlockStatus] = useUpdateBlockStatusMutation();
+  const [updateUserApproveStatus] = useUpdateApproveStatusMutation();
+
+  const handleUpdateBlockStatus = async () => {
     const option = {
       id: user._id,
     };
@@ -16,20 +22,51 @@ const AccountActionSelect = ({ user }: { user: IUser }) => {
     console.log(option);
 
     await postApiHandler({
-      mutateFn: updateUser,
+      mutateFn: updateUserBlockStatus,
       options: option,
-      setIsLoading: setIsLoading,
+      setIsLoading: setIsBlockLoading,
+    });
+  };
+
+  const handleUpdateApproveStatus = async () => {
+    const option = {
+      id: user._id,
+    };
+
+    console.log(option);
+
+    await postApiHandler({
+      mutateFn: updateUserApproveStatus,
+      options: option,
+      setIsLoading: setIsApproveLoading,
     });
   };
 
   return (
-    <Button
-      disabled={isLoading}
-      variant={"destructive"}
-      onClick={handleUpdateBlockStatusUpdate}
-    >
-      {isLoading ? "Updating..." : user.isBlocked ? "Unblock" : "Block"}
-    </Button>
+    <>
+      <Button
+        disabled={isBlockLoading}
+        variant={"destructive"}
+        onClick={handleUpdateBlockStatus}
+      >
+        {isBlockLoading ? "Updating..." : user.isBlocked ? "Unblock" : "Block"}
+      </Button>
+      <span className="w-4 inline-block"></span>
+      {user.role === "driver" && (
+        <Button
+          disabled={isApproveLoading}
+          variant={"outline"}
+          className="border border-red-500 text-red-500"
+          onClick={handleUpdateApproveStatus}
+        >
+          {isApproveLoading
+            ? "Updating..."
+            : user.isApproved
+            ? "Suspend"
+            : "Approve"}
+        </Button>
+      )}
+    </>
   );
 };
 

@@ -79,6 +79,34 @@ export const userApis = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["USER"],
     }),
+    //
+    // * update Password
+    //
+    updatePassword: builder.mutation({
+      query: ({ data }) => ({
+        url: apiConfig.USER.UPDATE_PASSWORD,
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        data: JSON.stringify(data),
+      }),
+      invalidatesTags: [],
+    }),
+    //
+    // * update Active Status
+    //
+    updateActiveStatus: builder.mutation({
+      query: ({ data }) => ({
+        url: apiConfig.USER.UPDATE_STATUS,
+        method: "PATCH",
+        headers: {
+          "content-type": "application/json",
+        },
+        data: JSON.stringify(data),
+      }),
+      invalidatesTags: ["USER"],
+    }),
   }),
 });
 
@@ -89,4 +117,6 @@ export const {
   useUserInfoQuery,
   useLogoutMutation,
   useUpdateUserMutation,
+  useUpdatePasswordMutation,
+  useUpdateActiveStatusMutation,
 } = userApis;

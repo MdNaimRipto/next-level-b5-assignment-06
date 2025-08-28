@@ -23,6 +23,8 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import UpdatePassword from "@/components/users/UpdatePassword";
+import UpdateVehicle from "@/components/users/UpdateVehicle";
 
 const accountSchema = z.object({
   userName: z.string().optional(),
@@ -78,108 +80,144 @@ const Account = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">My Account</h1>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Account Details */}
+        <div className="w-full">
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-2xl font-bold">My Account</h1>
 
-        {/* Edit Button opens dialog */}
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button variant="default">Edit</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Edit Account</DialogTitle>
-            </DialogHeader>
+            {/* Edit Button opens dialog */}
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogTrigger asChild>
+                <Button variant="default">Edit</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Edit Account</DialogTitle>
+                </DialogHeader>
 
-            {/* Use Form and FormField components */}
-            <Form {...form}>
-              <form
-                className="space-y-4"
-                onSubmit={form.handleSubmit(onSubmit)}
-              >
-                <FormField
-                  control={form.control}
-                  name="userName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Name</FormLabel>
-                      <FormControl>
-                        <Input required={false} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input required={false} type="email" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="contactNumber"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Contact Number</FormLabel>
-                      <FormControl>
-                        <Input required={false} {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {/* Use Form and FormField components */}
+                <Form {...form}>
+                  <form
+                    className="space-y-4"
+                    onSubmit={form.handleSubmit(onSubmit)}
+                  >
+                    <FormField
+                      control={form.control}
+                      name="userName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Name</FormLabel>
+                          <FormControl>
+                            <Input required={false} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input required={false} type="email" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="contactNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Contact Number</FormLabel>
+                          <FormControl>
+                            <Input required={false} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Saving..." : "Save Changes"}
-                </Button>
-              </form>
-            </Form>
-          </DialogContent>
-        </Dialog>
-      </div>
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? "Saving..." : "Save Changes"}
+                    </Button>
+                  </form>
+                </Form>
+              </DialogContent>
+            </Dialog>
+          </div>
+          <div className="bg-white shadow rounded-2xl p-6 space-y-4 w-full">
+            <div className="flex justify-between">
+              <span className="font-medium">Name</span>
+              <span>{user?.userName}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Email</span>
+              <span>{user?.email}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Contact Number</span>
+              <span>{user?.contactNumber}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Role</span>
+              <span className="capitalize">{user?.role}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Verified</span>
+              <span>{user?.isVerified ? "✅ Yes" : "❌ No"}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Active Status</span>
+              <span className="capitalize">{user?.isActive}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Approved</span>
+              <span>{user?.isApproved ? "✅ Yes" : "❌ No"}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Blocked</span>
+              <span>{user?.isBlocked ? "🚫 Yes" : "✔️ No"}</span>
+            </div>
+          </div>
+        </div>
 
-      {/* Account Details */}
-      <div className="bg-white shadow rounded-2xl p-6 space-y-4">
-        <div className="flex justify-between">
-          <span className="font-medium">Name</span>
-          <span>{user?.userName}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">Email</span>
-          <span>{user?.email}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">Contact Number</span>
-          <span>{user?.contactNumber}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">Role</span>
-          <span className="capitalize">{user?.role}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">Verified</span>
-          <span>{user?.isVerified ? "✅ Yes" : "❌ No"}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">Active Status</span>
-          <span className="capitalize">{user?.isActive}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">Approved</span>
-          <span>{user?.isApproved ? "✅ Yes" : "❌ No"}</span>
-        </div>
-        <div className="flex justify-between">
-          <span className="font-medium">Blocked</span>
-          <span>{user?.isBlocked ? "🚫 Yes" : "✔️ No"}</span>
-        </div>
+        {/* Update Password */}
+        <UpdatePassword />
+
+        {/* Vehicle Details */}
+        {user && user.role === "driver" && (
+          <div className="w-full h-full">
+            <div className="flex items-center justify-between mb-6">
+              <h1 className="text-2xl font-bold">Vehicle Details</h1>
+            </div>
+            <div className="bg-white shadow rounded-2xl p-6 space-y-4 w-full">
+              <div className="flex justify-between">
+                <span className="font-medium">Type</span>
+                <span>{user?.vehicle?.type?.toUpperCase()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium">Vehicle Number</span>
+                <span>
+                  {user?.vehicle?.number
+                    ? user?.vehicle?.number
+                    : "Not Updated Yet!"}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Update Vehicle */}
+        {user && user.role === "driver" && <UpdateVehicle />}
       </div>
     </div>
   );
