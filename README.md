@@ -1,69 +1,81 @@
-# React + TypeScript + Vite
+# Project Name:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Ride BD - Ride management system frontend
 
-Currently, two official plugins are available:
+# Github:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- https://github.com/MdNaimRipto/next-level-b5-assignment-06
 
-## Expanding the ESLint configuration
+# Live link:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- https://rider-bd.vercel.app
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Technologies:
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- Next.js
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Tailwind.CSS
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- ShadCN
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- React Hook Form
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Redux Toolkit
+
+- Axios
+
+- Lucid Icons
+
+- React leaflet
+
+- React Rechart
+
+- Zod
+
+# Project Features
+
+1. Can Register, Verify Account using Mail and Login.
+
+2. Can Update Profile details and Password
+
+3. Riders can request rides to any specific driver
+
+4. Riders can cancel the ride before the ride started
+
+5. Drivers can accept or reject any ride and can update accepted rides status
+
+6. Drivers can check there own earning analysis
+
+7. Both Driver and Rider can see there rides and filter according there needs
+
+8. Admin have access to see the rides and users and also filter options
+
+9. Admin can block or unblock any user and also can approve or cancel approval of any account
+
+10. Any Rider or Driver can request SOS while on a active ride and admin can see the requested sos with the location inside admin dashboard and take action according the needs
+
+# How to run:
+
+1. Clone the project from: https://github.com/MdNaimRipto/next-level-b5-assignment-06
+
+2. Run: npm i / npm install
+
+3. No .env required in this project to run
+
+4. Run: npm run dev to start the project.
+
+5. Test the functionalities.
+
+# Sample Credentials:
+
+- Admin:
+- email: admin00@gmail.com
+- password: admin00
+
+- Rider:
+- email: rider0100@gmail.com
+- password: rider00
+
+- Admin:
+- email: driver01@gmail.com
+- password: driver00
